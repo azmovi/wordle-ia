@@ -8,6 +8,11 @@ packages = [{include = "wordle_ia"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
+pytest = "^7.4.4"
+pytest-cov = "^4.1.0"
+blue = "^0.9.1"
+isort = "^5.13.2"
+taskipy = "^1.12.2"
 
 
 [build-system]
