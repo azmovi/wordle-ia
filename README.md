@@ -44,9 +44,10 @@ def soma(a: int, b: int) -> int:
         >>> soma(1, -1)
         0
     """
+    return a + b
 ```
-- Só tem que se lembrar de tipar a variavel de entrar e saida da função, a espe
-cificação do `Parameter` e do `Returns` é mais para a criação da documentação, 
+- Só tem que se lembrar de tipar a variavel de entrar e saida da função, a 
+especificação do `Parameter` e do `Returns` é mais para a criação da documentação, 
 tem que discutir se vai querer fazer isso ainda (eu acho bom e é mais facil para
 explicar no futuro)
 
