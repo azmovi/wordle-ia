@@ -60,4 +60,5 @@ $ task test
 ```bash
 $ task format
 ```
-
+#### Referencias
+[live de python - Rich Text](https://www.youtube.com/watch?v=gadMAObZ_1Y&ab_channel=EduardoMendes)
