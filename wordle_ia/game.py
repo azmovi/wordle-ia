@@ -48,12 +48,13 @@ def palavra_valida(palavra: str) -> bool:
         >>> palavra_valida('antonio')
         False
     """
+    palavra = palavra.lower()
     if len(palavra) == 5 and palavra in CONJUNTO_DE_PALAVRAS:
         return True
     return False
 
 
-def preprocess(palavra: str, palavra_sortida: str) -> tuple[list[str], bool]:
+def cria_lista_letra(palavra: str, palavra_sortida: str) -> tuple[list[str], bool]:
     """
     Faz o pré-processamento da palavra para conseguir colocar na tabela
     Parameters:
@@ -63,9 +64,9 @@ def preprocess(palavra: str, palavra_sortida: str) -> tuple[list[str], bool]:
         formatadas e um booleano representando se a palavra teste foi correta
         ou não
     Example:
-        >>> preprocess('white', 'white')
+        >>> cria_lista_letra('white', 'white')
         (['[bold green]W[/bold green]', ...], True)
-        >>> preprocess('piece', 'white')
+        >>> cria_lista_letra('piece', 'white')
         (['[bold]P[/bold]', ...], False)
     """
 
@@ -82,6 +83,7 @@ def preprocess(palavra: str, palavra_sortida: str) -> tuple[list[str], bool]:
             dict_palavra_sortida[letra] -= 1
             if dict_palavra_sortida[letra] == 0:
                 del dict_palavra_sortida[letra]
+
             # Veriricar se acertou a palavra
             if len(dict_palavra_sortida) == 0:
                 return lista_de_letras, True
@@ -114,8 +116,6 @@ def init_tabela() -> None:
     """
     Cria a tabela inicial vazia.
     Examples:
-        >>> init_tabela()
-        Wordle ... ┘
     """
     tabela = Table(
         title='[bold]Wordle[/bold]',
@@ -145,7 +145,7 @@ def create_tabela() -> Table:
 
 
 def imprime_tentativa(tentativa: str, palavra_sortida: str) -> bool:
-    lista_de_letras, certo = preprocess(tentativa, palavra_sortida)
+    lista_de_letras, certo = cria_lista_letra(tentativa, palavra_sortida)
     LISTA_DE_TENTATIVAS.append(lista_de_letras)
     tabela = create_tabela()
 
@@ -162,7 +162,7 @@ def imprime_tentativa(tentativa: str, palavra_sortida: str) -> bool:
 LISTA_DE_TENTATIVAS = []
 
 
-def __main__():
+def init_game():
     init_tabela()
     palavra_sortida = choice(list(CONJUNTO_DE_PALAVRAS))
     certo = False
@@ -173,7 +173,3 @@ def __main__():
             tentativa = input('Informe a palavra: ')
         certo = imprime_tentativa(tentativa, palavra_sortida)
     print('Meus parabens')
-
-
-if __name__ == '__main__':
-    __main__()
