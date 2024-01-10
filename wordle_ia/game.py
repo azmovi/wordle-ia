@@ -1,5 +1,3 @@
-from random import choice
-
 from rich import box
 from rich.console import Console
 from rich.table import Table
@@ -7,6 +5,8 @@ from rich.table import Table
 from wordle_ia.banco_de_palavras import CONJUNTO_DE_PALAVRAS
 
 console = Console()
+
+LISTA_DE_TENTATIVAS = []
 
 
 def cria_o_dict_palavra_sortida(palavra: str) -> dict[str, int]:
@@ -54,7 +54,9 @@ def palavra_valida(palavra: str) -> bool:
     return False
 
 
-def cria_lista_letra(palavra: str, palavra_sortida: str) -> tuple[list[str], bool]:
+def cria_lista_letra(
+    palavra: str, palavra_sortida: str
+) -> tuple[list[str], bool]:
     """
     Faz o pré-processamento da palavra para conseguir colocar na tabela
     Parameters:
@@ -112,7 +114,7 @@ def cria_lista_letra(palavra: str, palavra_sortida: str) -> tuple[list[str], boo
     return lista_de_letras, False
 
 
-def init_tabela() -> None:
+def init_table() -> None:
     """
     Cria a tabela inicial vazia.
     Examples:
@@ -128,26 +130,23 @@ def init_tabela() -> None:
         tabela.add_row(' ', ' ', ' ', ' ', ' ')
 
     console.print(tabela)
-
     return
 
 
-def create_tabela() -> Table:
-    tabela = Table(
-        title='[bold]Wordle[/bold]',
-        show_header=False,
-        show_lines=True,
-        box=box.SQUARE,
-        title_justify='center',
-    )
-
-    return tabela
-
-
 def imprime_tentativa(tentativa: str, palavra_sortida: str) -> bool:
+    """
+    Usa o rich para imprimir a palavra tentativa do usuário além de mostrar se
+    a palavra testada é a correta ou não
+    Parameters:
+        tentativa: a palavra tentativa do usuário.
+        palavra_sortida: a palavra a ser acertada pelo usuário.
+    Returns:
+        Um booleano que representa se a palavra teste é a correta.
+    Examples:
+    """
     lista_de_letras, certo = cria_lista_letra(tentativa, palavra_sortida)
-    LISTA_DE_TENTATIVAS.append(lista_de_letras)
-    tabela = create_tabela()
+    certo, LISTA_DE_TENTATIVAS.append(lista_de_letras)
+    tabela = create_table()
 
     for letras in LISTA_DE_TENTATIVAS:
         tabela.add_row(*letras)
@@ -159,17 +158,20 @@ def imprime_tentativa(tentativa: str, palavra_sortida: str) -> bool:
     return certo
 
 
-LISTA_DE_TENTATIVAS = []
-
-
-def init_game():
-    init_tabela()
-    palavra_sortida = choice(list(CONJUNTO_DE_PALAVRAS))
-    certo = False
-    print(palavra_sortida)
-    while not certo:
-        tentativa = ''  # Gambiarra
-        while palavra_valida(tentativa) is False:
-            tentativa = input('Informe a palavra: ')
-        certo = imprime_tentativa(tentativa, palavra_sortida)
-    print('Meus parabens')
+def create_table() -> Table:
+    """
+    Cria uma tabela com o setup especifico e vazia
+    Returns:
+        Uma tabela do rich com o setup do wordle
+    Examples:
+        >>> create_table()
+        <...>
+    """
+    tabela = Table(
+        title='[bold]Wordle[/bold]',
+        show_header=False,
+        show_lines=True,
+        box=box.SQUARE,
+        title_justify='center',
+    )
+    return tabela

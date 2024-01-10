@@ -6,6 +6,9 @@ authors = ["azevedo <azevedoantoniocicero@gmail.com>"]
 readme = "README.md"
 packages = [{include = "wordle_ia"}]
 
+[tool.poetry.scripts]
+wordle = "wordle_ia.cli:app"
+
 [tool.poetry.dependencies]
 python = "^3.11"
 pytest = "^7.4.4"
@@ -16,6 +19,7 @@ taskipy = "^1.12.2"
 rich = "^13.7.0"
 numpy = "^1.26.2"
 tabulate = "^0.9.0"
+typer = "^0.9.0"
 
 
 [build-system]

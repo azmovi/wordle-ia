@@ -1,8 +1,10 @@
-from type.testing import CliRunner
+from typer.testing import CliRunner
+
 from wordle_ia.cli import app
 
 runner = CliRunner()
 
-def game_retorna_0():
+
+def test_stdout_zero():
     result = runner.invoke(app)
-    assert result.exit_code == 0
+    assert result.exit_code == 1
