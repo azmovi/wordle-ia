@@ -16,17 +16,18 @@ def init_game():
     init_table()
     palavra_sortida = choice(list(CONJUNTO_DE_PALAVRAS))
     certo = False
-    # print(palavra_sortida)
+    print(palavra_sortida)
     msg1 = ':party_popper: [bold green] PARABENS! [/bold green] :party_popper:'
     msg2 = ':tired_face: [bold red] VOCÊ PERDEU [/bold red] :tired_face:'
     qtd_tentativas = 0
-    while not certo or qtd_tentativas > 6:
+    while qtd_tentativas < 6 and not certo:
         tentativa = ''  # Gambiarra
         while palavra_valida(tentativa) is False:
             tentativa = input('Informe a palavra: ')
 
         qtd_tentativas += 1
         os.system('cls' if os.name == 'nt' else 'clear')
+        console.print(qtd_tentativas)
         certo = imprime_tentativa(tentativa, palavra_sortida)
     if certo:
         console.print(msg1)
