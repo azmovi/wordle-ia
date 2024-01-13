@@ -2,15 +2,15 @@
 
 ## Setup inicial para começar o desenvolvimento
 #### Poetry
-- Ele é reposavel por garantir o versionamento do projeto
-- Tem que entrar toda vez nele quando quiser mudar algo no codigo (não esquecer).
+- Ele é responsável por garantir o versionamento do projeto
+- Tem que entrar toda vez nele quando quiser mudar algo no código (não esquecer).
 ```bash
 $ sudo apt install pip
 ```
 ```bash
 $ pip install poetry
 ```
-- Após ter instalado o poetry entra no repositorio e entra no ambiente de
+- Após ter instalado o poetry entra no repositório e entra no ambiente de
 desenvolvimento
 ```bash
 $ poetry shell
@@ -46,9 +46,9 @@ def soma(a: int, b: int) -> int:
     """
     return a + b
 ```
-- Só tem que se lembrar de tipar a variavel de entrar e saida da função, a 
+- Só tem que se lembrar de tipar a variável de entrar e saída da função, a 
 especificação do `Parameter` e do `Returns` é mais para a criação da documentação, 
-tem que discutir se vai querer fazer isso ainda (eu acho bom e é mais facil para
+tem que discutir se vai querer fazer isso ainda (eu acho bom e é mais fácil para
 explicar no futuro)
 
 - Para testar se a função está rodando da forma correta
@@ -60,5 +60,12 @@ $ task test
 ```bash
 $ task format
 ```
+
+#### Executar o jogo
+- Para conseguir jogar de forma normal deve rodar o seguinte comando:
+```bash
+poetry run wordle
+```
+- Recomendo que tenha uma fonte de emoji no bash para melhor experiencia do usuário
 #### Referencias
 [live de python - Rich Text](https://www.youtube.com/watch?v=gadMAObZ_1Y&ab_channel=EduardoMendes)

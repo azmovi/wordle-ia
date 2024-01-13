@@ -2,7 +2,7 @@ from rich import box
 from rich.console import Console
 from rich.table import Table
 
-from wordle_ia.banco_de_palavras import CONJUNTO_DE_PALAVRAS
+from wordle_ia.banco_de_palavras import CONJUNTO_TODAS_PALAVRAS
 
 console = Console()
 
@@ -49,7 +49,7 @@ def palavra_valida(palavra: str) -> bool:
         False
     """
     palavra = palavra.lower()
-    if len(palavra) == 5 and palavra in CONJUNTO_DE_PALAVRAS:
+    if len(palavra) == 5 and palavra in CONJUNTO_TODAS_PALAVRAS:
         return True
     return False
 
