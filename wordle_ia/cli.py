@@ -4,9 +4,8 @@ from random import choice
 from rich.console import Console
 from typer import Typer
 
-from wordle_ia.banco_de_palavras import CONJUNTO_PALAVRAS_SORTIDAS
-from wordle_ia.game import imprime_tentativa, init_table, palavra_valida
-from wordle_ia.ia import tentativa_ia, test_tentativa
+from wordle_ia.banco_palavras_validas import CONJUNTO_PALAVRAS_VALIDAS
+from wordle_ia.game import analise_palavra_teste, imprime_tentativa, init_table, palavra_valida
 
 app = Typer()
 console = Console()
@@ -15,7 +14,7 @@ console = Console()
 @app.command()
 def normal():
     init_table()
-    palavra_sortida = choice(list(CONJUNTO_PALAVRAS_SORTIDAS))
+    palavra_sortida = choice(list(CONJUNTO_PALAVRAS_VALIDAS))
     certo = False
     # print(palavra_sortida)
     msg1 = ':party_popper: [bold green] PARABENS! [/bold green] :party_popper:'
@@ -28,7 +27,10 @@ def normal():
 
         qtd_tentativas += 1
         os.system('cls' if os.name == 'nt' else 'clear')
-        certo = imprime_tentativa(tentativa, palavra_sortida)
+        lista_posicoes = analise_palavra_teste(tentativa, palavra_sortida)
+        imprime_tentativa(tentativa, lista_posicoes)
+        certo = sum(lista_posicoes) == 10
+
     if certo:
         console.print(msg1)
     else:
@@ -39,7 +41,7 @@ def normal():
 @app.command()
 def computer():
     init_table()
-    palavra_sortida = choice(list(CONJUNTO_PALAVRAS_SORTIDAS))
+    palavra_sortida = choice(list(CONJUNTO_PALAVRAS_VALIDAS))
     palavra_inicial = 'salet'
     certo = False
     # print(palavra_sortida)

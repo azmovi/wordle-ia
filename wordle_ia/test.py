@@ -1,35 +1,18 @@
-# from banco_palavras_validas import CONJUNTO_PALAVRAS_VALIDAS
-
-correta = 'float'
-test = 'slate'
-
-
-def retorna_lista_pos_correta(
-    palavra_correta: str, palavra_test: str
-) -> list[int]:
-    correta = list(palavra_correta)
-    test = list(palavra_test)
-    posicao_correta = [0] * 5
-
-    for i in range(5):
-        if correta[i] == test[i]:
-            posicao_correta[i] = 2
-            test[i] = 1
-            correta[i] = 0
-
-    for i in range(5):
-        if test[i] in correta:
-            indice = correta.index(test[i])
-            posicao_correta[i] = 1
-            test[i] = 1
-            correta[indice] = 0
-
-    for i in range(5):
-        t = test[i]
-        if t != 0 and t != 1:
-            posicao_correta[i] = 0
-
-    return posicao_correta
+from banco_palavras_possiveis import CONJUNTO_PALAVRAS_POSSIVEIS
+lista = [2, 0, 2, 0, 0,]
+print(lista.index(2))
+cabou = False
+valor = 2
+lista_de_indices = []
+while cabou == False:
+    try:
+        indice = lista.index(valor)
+        lista_de_indices.append(indice)
+        lista[indice] = 0
+    except: 
+        cabou = True
+print(lista_de_indices)
 
 
-print(retorna_lista_pos_correta('crepe', 'speed'))
+for palavra in CONJUNTO_PALAVRAS_POSSIVEIS:
+    print(palavra[::-1])
