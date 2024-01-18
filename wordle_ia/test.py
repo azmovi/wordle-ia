@@ -5,19 +5,6 @@ def indices_tipo(lista_pos: list[int], tipo: int) -> list[int]:
     return [i for i, v in enumerate(lista_pos) if v == tipo]
 
 
-def palavra_com_duplicata(palavra_teste: str) -> tuple[list[str], bool]:
-    letras_vistas = set()
-    letras_duplicadas = []
-
-    for letra in palavra_teste:
-        if letra in letras_vistas and letra not in letras_duplicadas:
-            letras_duplicadas.append(letra)
-        else:
-            letras_vistas.add(letra)
-
-    return len(letras_duplicadas) != 0, letras_duplicadas
-
-
 def remove_palavras_com_cinza(
     palavra_teste: str,
     lista_pos: list[int],
@@ -26,19 +13,18 @@ def remove_palavras_com_cinza(
 ) -> set[str]:
 
     tipo = 0
-    conjunto_rejeitado = set()
-    novo_visitados = visitados.copy()
     lista_indices = indices_tipo(lista_pos, tipo)
+    novo_banco_de_palavras = set()
 
     for indice in lista_indices:
         letra = palavra_teste[indice]
         if letra not in novo_visitados:
-            novo_visitados.add(letra)
+            visitados.add(letra)
             for palavra in banco_de_palavras:
-                if letra in palavra:
-                    conjunto_rejeitado.add(palavra)
+                if letra not in palavra:
+                    novo_banco_de_palavras.add(palavra)
 
-    return banco_de_palavras - conjunto_rejeitado, novo_visitados
+    return novo_banco_de_palavras, visitados
 
 
 def escolhe_palavras_com_verde(
@@ -68,19 +54,18 @@ def escolhe_palavras_com_amarelo(
 ) -> tuple[set[str], set[str]]:
 
     tipo = 1
-    novo_banco_de_palavras = set()
-    novo_visitados = visitados.copy()
     lista_indices = indices_tipo(lista_pos, tipo)
+    novo_banco_de_palavras = set()
 
     for indice in lista_indices:
         letra = palavra_teste[indice]
         if letra not in novo_visitados:
-            novo_visitados.add(letra)
+            visitados.add(letra)
             for palavra in banco_de_palavras:
                 if letra in palavra:
                     novo_banco_de_palavras.add(palavra)
 
-    return novo_banco_de_palavras, novo_visitados
+    return novo_banco_de_palavras, visitados
 
 
 palavra_test = 'speed'
@@ -92,12 +77,15 @@ banco_de_palavras = CONJUNTO_PALAVRAS_POSSIVEIS
 novo_banco, novo_visitados = escolhe_palavras_com_verde(
     palavra_test, lista_pos, banco_de_palavras
 )
+
 print(novo_banco, novo_visitados)
 
 
 novo_banco, novo_visitados = escolhe_palavras_com_amarelo(
     palavra_test, lista_pos, novo_banco, novo_visitados
 )
+
+print(novo_banco, novo_visitados)
 
 print(remove_palavras_com_cinza(
         palavra_test, lista_pos, novo_banco, novo_visitados
