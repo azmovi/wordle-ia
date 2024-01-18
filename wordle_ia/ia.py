@@ -1,6 +1,7 @@
 # from wordle_ia.game import analise_palavra_teste
 
-# Filtro_verde -> Filtro_Cinza -> Filtro_Amarelo
+# Filtro_verde -> Filtro_Amarelo -> Filtro_Cinza
+# Evitar a ocorre de uma duplicada sendo verde ou amarela
 
 
 def indices_tipo(lista_pos: list[int], tipo: int) -> list[int]:

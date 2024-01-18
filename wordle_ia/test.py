@@ -94,11 +94,11 @@ novo_banco, novo_visitados = escolhe_palavras_com_verde(
 )
 print(novo_banco, novo_visitados)
 
-novo_banco, novo_visitados = remove_palavras_com_cinza(
-        palavra_test, lista_pos, novo_banco, novo_visitados
-)
-print(novo_banco, novo_visitados)
 
-print(escolhe_palavras_com_amarelo(
+novo_banco, novo_visitados = escolhe_palavras_com_amarelo(
     palavra_test, lista_pos, novo_banco, novo_visitados
+)
+
+print(remove_palavras_com_cinza(
+        palavra_test, lista_pos, novo_banco, novo_visitados
 ))
