@@ -1,48 +1,72 @@
-from collections import Counter
+# from wordle_ia.game import analise_palavra_teste
 
-import numpy as np
-
-from wordle_ia.banco_palavras_validas import CONJUNTO_PALAVRAS_VALIDAS
-from wordle_ia.game import analise_palavra_teste
+# Filtro_verde -> Filtro_Cinza -> Filtro_Amarelo
 
 
-palavra_teste = 'speed'
-palavra_correta = 'steal'
+def indices_tipo(lista_pos: list[int], tipo: int) -> list[int]:
+    return [i for i, v in enumerate(lista_pos) if v == tipo]
 
-# Reduzir meu espaço de busca
-lista_pos = analise_palavra_teste(palavra_teste, palavra_correta)
-print(lista_pos)
 
-def remove_palavras_com_cinza(
-        palavra_teste: str, lista_pos: list[int], banco_de_palavras: set[str]
+def filtro_verde(
+    palavra_teste: str, lista_pos: list[int], banco_de_palavras: set[str]
+) -> tuple[set[str], set[str]]:
+    novo_banco_de_palavras = set()
+    tipo = 2
+    lista_indices = indices_tipo(lista_pos, tipo)
+
+    for palavra in banco_de_palavras:
+        if all(
+            palavra_teste[indice] == palavra[indice]
+            for indice in lista_indices
+        ):
+            novo_banco_de_palavras.add(palavra)
+
+    visitados = {palavra_teste[indice] for indice in lista_indices}
+
+    return novo_banco_de_palavras, visitados
+
+
+def filtro_cinza(
+    palavra_teste: str,
+    lista_pos: list[int],
+    banco_de_palavras: set[str],
+    visitados: set[str],
 ) -> set[str]:
 
+    tipo = 0
     conjunto_rejeitado = set()
-    for i in range(5):
-        letra = palavra_teste[i]
-        tipo = lista_pos[i]
-        if tipo == 0:
-            for palavra in banco_de_palavras:
-                if letra in palavra and palavra_teste[indice1] != palavra[indice1] and :
-                    conjunto_rejeitado.add(palavra)
-    return banco_de_palavras - conjunto_rejeitado
+    novo_visitados = visitados.copy()
+    lista_indices = indices_tipo(lista_pos, tipo)
 
-def escolhe_palavras_com_verde(
-        palavra_test: str, lista_pos: list[int], banco_de_palavras: set[str]
-):
-    novo_banco_de_palavras = set()
-    for i in range(5):
-        letra = palavra_test[i]
-        tipo = lista_pos[i]
-        if tipo == 2:
+    for indice in lista_indices:
+        letra = palavra_teste[indice]
+        if letra not in novo_visitados:
+            novo_visitados.add(letra)
             for palavra in banco_de_palavras:
-                if palavra[i] == letra:
+                if letra in palavra:
+                    conjunto_rejeitado.add(palavra)
+
+    return banco_de_palavras - conjunto_rejeitado, novo_visitados
+
+
+def filtro_amarelo(
+    palavra_teste: str,
+    lista_pos: list[int],
+    banco_de_palavras: set[str],
+    visitados: set[str],
+) -> tuple[set[str], set[str]]:
+
+    tipo = 1
+    novo_banco_de_palavras = set()
+    novo_visitados = visitados.copy()
+    lista_indices = indices_tipo(lista_pos, tipo)
+
+    for indice in lista_indices:
+        letra = palavra_teste[indice]
+        if letra not in novo_visitados:
+            novo_visitados.add(letra)
+            for palavra in banco_de_palavras:
+                if letra in palavra:
                     novo_banco_de_palavras.add(palavra)
 
-    return novo_banco_de_palavras
-
-
-novo_conjunto = escolhe_palavras_com_verde('speed', [1, 0, 2, 0, 0], {'aback', 'newts', 'while', 'with', 'steal', 'bleart'})
-    
-#conjunto_novo = remove_palavras_com_cinza(palavra_teste, lista_pos, {'steal'})
-print(novo_conjunto)
+    return novo_banco_de_palavras, novo_visitados

@@ -5,7 +5,12 @@ from rich.console import Console
 from typer import Typer
 
 from wordle_ia.banco_palavras_validas import CONJUNTO_PALAVRAS_VALIDAS
-from wordle_ia.game import analise_palavra_teste, imprime_tentativa, init_table, palavra_valida
+from wordle_ia.game import (
+    analise_palavra_teste,
+    imprime_tentativa,
+    init_table,
+    palavra_valida,
+)
 
 app = Typer()
 console = Console()
