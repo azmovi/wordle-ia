@@ -1,6 +1,3 @@
-from wordle_ia.banco_palavras import criar_conjunto
-
-
 def indices_tipo(lista_pos: list[int], tipo: int) -> list[int]:
     """
     Cria uma lista de inteiros que representa as posições que um determinado

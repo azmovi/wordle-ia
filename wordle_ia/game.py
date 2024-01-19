@@ -7,7 +7,9 @@ from wordle_ia.banco_palavras import criar_conjunto
 console = Console()
 
 LISTA_DE_TENTATIVAS = []
-CONJUNTO_PALAVRAS_POSSIVEIS = criar_conjunto('palavras_possiveis.txt')
+CONJUNTO_PALAVRAS_POSSIVEIS = criar_conjunto(
+    'wordle_ia/palavras_possiveis.txt'
+)
 
 
 def palavra_valida(palavra: str) -> bool:

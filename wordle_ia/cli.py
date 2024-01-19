@@ -17,8 +17,10 @@ from wordle_ia.score import melhor_palavra
 app = Typer()
 console = Console()
 
-CONJUNTO_PALAVRAS_VALIDAS = criar_conjunto('palavras_validas.txt')
-CONJUNTO_PALAVRAS_POSSIVEIS = criar_conjunto('palavras_possiveis.txt')
+CONJUNTO_PALAVRAS_VALIDAS = criar_conjunto('wordle_ia/palavras_validas.txt')
+CONJUNTO_PALAVRAS_POSSIVEIS = criar_conjunto(
+    'wordle_ia/palavras_possiveis.txt'
+)
 
 
 @app.command()
