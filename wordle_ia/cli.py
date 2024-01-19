@@ -48,6 +48,9 @@ def normal():
 
 @app.command()
 def ia():
+    # Arrumar o filtro ou está excluindo de mais ou de menos
+    # Arrumar para a ia nem sempre escolher a melhor palavra
+
     palavra_sortida = choice(list(CONJUNTO_PALAVRAS_VALIDAS))
     palavra_inicial = 'salet'
     certo = False
