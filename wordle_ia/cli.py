@@ -4,13 +4,16 @@ from random import choice
 from rich.console import Console
 from typer import Typer
 
+from wordle_ia.banco_palavras_possiveis import CONJUNTO_PALAVRAS_POSSIVEIS
 from wordle_ia.banco_palavras_validas import CONJUNTO_PALAVRAS_VALIDAS
+from wordle_ia.filtros import executa_filtros
 from wordle_ia.game import (
     analise_palavra_teste,
     imprime_tentativa,
     init_table,
     palavra_valida,
 )
+from wordle_ia.score import melhor_palavra
 
 app = Typer()
 console = Console()
@@ -44,20 +47,38 @@ def normal():
 
 
 @app.command()
-def computer():
-    init_table()
+def ia():
     palavra_sortida = choice(list(CONJUNTO_PALAVRAS_VALIDAS))
     palavra_inicial = 'salet'
     certo = False
-    # print(palavra_sortida)
     msg1 = ':party_popper: [bold green] PARABENS! [/bold green] :party_popper:'
     msg2 = ':tired_face: [bold red] VOCÊ PERDEU [/bold red] :tired_face:'
+    msg3 = '[bold]Aperte ENTER para testar a próxima palavra...[/bold]'
     qtd_tentativas = 0
-    analise_palavra, banco_reduzido = test_tentativa(palavra_inicial)
+    banco_de_palavras = CONJUNTO_PALAVRAS_POSSIVEIS
+    lista_posicoes = []
+    tentativa = palavra_inicial
+    score = 3.5
     while not certo and qtd_tentativas < 6:
-        tentativa = tentativa_ia(analise_palavra, banco_reduzido)
+        if qtd_tentativas > 0:
+            banco_de_palavras = executa_filtros(
+                tentativa, lista_posicoes, banco_de_palavras
+            )
+            tentativa, score = melhor_palavra(banco_de_palavras)
+            if len(tentativa) == 0:
+                print("FUDEU")
+                break
+
+        lista_posicoes = analise_palavra_teste(tentativa, palavra_sortida)
+        imprime_tentativa(tentativa, lista_posicoes)
+        console.print(f'A palavra {tentativa}, teve um score de {score}')
+        console.print(msg3)
+        console.print(len(banco_de_palavras))
+        input()
         os.system('cls' if os.name == 'nt' else 'clear')
-        certo = imprime_tentativa(tentativa, palavra_sortida)
+        qtd_tentativas += 1
+        certo = sum(lista_posicoes) == 10
+
     if certo:
         console.print(msg1)
     else:

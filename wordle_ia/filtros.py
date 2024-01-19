@@ -1,10 +1,3 @@
-# from wordle_ia.game import analise_palavra_teste
-from wordle_ia.banco_palavras_possiveis import CONJUNTO_PALAVRAS_POSSIVEIS
-
-# Filtro_verde -> Filtro_Amarelo -> Filtro_Cinza
-# Evitar que ocorra de uma duplicada sendo verde ou amarela
-
-
 def indices_tipo(lista_pos: list[int], tipo: int) -> list[int]:
     """
     Cria uma lista de inteiros que representa as posições que um determinado
@@ -58,6 +51,7 @@ def filtro_verde(
         ({...}, {'e'})
 
     """
+    visitados = set()
     novo_banco_de_palavras = set()
     tipo = 2
     lista_indices = indices_tipo(lista_pos, tipo)
@@ -69,7 +63,8 @@ def filtro_verde(
             ):
                 novo_banco_de_palavras.add(palavra)
 
-        visitados = {palavra_teste[indice] for indice in lista_indices}
+        if len(lista_indices) != 0:
+            visitados = {palavra_teste[indice] for indice in lista_indices}
 
     return novo_banco_de_palavras, visitados
 
@@ -99,8 +94,7 @@ def filtro_cinza(
 
     Returns:
         Uma tupla que o primeiro valor será o novo conjunto banco de palavras
-        que foi construído baseado no filtro e o segundo valor um conjunto com
-        as letras que já passaram no filtro para evitar inconsistência.
+        que foi construído baseado no filtro
 
     Examples:
         >>> palavra_teste = 'speed'
@@ -112,7 +106,7 @@ def filtro_cinza(
         >>> filtro_cinza(
         ... palavra_teste, lista_pos, banco_de_palavras, visitados
         ... )
-        ({...}, {...})
+        {...}
     """
     tipo = 0
     palavras_rejeitadas = set()
@@ -126,7 +120,7 @@ def filtro_cinza(
                     if letra in palavra:
                         palavras_rejeitadas.add(palavra)
 
-    return banco_de_palavras - palavras_rejeitadas, visitados
+    return banco_de_palavras - palavras_rejeitadas
 
 
 def filtro_amarelo(
@@ -186,11 +180,11 @@ def filtro_amarelo(
 
 
 def executa_filtros(
-        palavra_teste: str, lista_pos: list[int], banco_de_palavras: set[str]
+    palavra_teste: str, lista_pos: list[int], banco_de_palavras: set[str]
 ) -> set[str]:
     """
-    Função responsável por rodar os três filtros de palavras na seguinte ordem 
-    filtro verde depois filtro amarelo e por último filtro cinza e diminuir o 
+    Função responsável por rodar os três filtros de palavras na seguinte ordem
+    filtro verde depois filtro amarelo e por último filtro cinza e diminuir o
     espaço de busca para encontrar a palavra certa.
 
     Parameters:
@@ -203,5 +197,25 @@ def executa_filtros(
         banco_de_palavras: Um conjunto de palavras formada por 5 letras.
 
     Returns:
+        Um conjunto com o resultado das palavras que sobraram após a passagem
+        pelo os três filtros.
 
+    Examples:
+        >>> lista_pos = [0, 1, 2, 1, 0]  # crepe
+        >>> banco_de_palavras = {
+        ... 'crepe', 'steal', 'arise', 'creep', 'wheel', 'prece', 'soelp'
+        ... }
+        >>> executa_filtros('speed', lista_pos, banco_de_palavras)
+        {...}
     """
+    novo_banco_de_palavras, verificados = filtro_verde(
+        palavra_teste, lista_pos, banco_de_palavras
+    )
+    novo_banco_de_palavras, verificados = filtro_amarelo(
+        palavra_teste, lista_pos, novo_banco_de_palavras, verificados
+    )
+    novo_banco_de_palavras = filtro_cinza(
+        palavra_teste, lista_pos, novo_banco_de_palavras, verificados
+    )
+
+    return novo_banco_de_palavras
