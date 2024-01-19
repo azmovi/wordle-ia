@@ -4,8 +4,7 @@ from random import choice
 from rich.console import Console
 from typer import Typer
 
-from wordle_ia.banco_palavras_possiveis import CONJUNTO_PALAVRAS_POSSIVEIS
-from wordle_ia.banco_palavras_validas import CONJUNTO_PALAVRAS_VALIDAS
+from wordle_ia.banco_palavras import criar_conjunto
 from wordle_ia.filtros import executa_filtros
 from wordle_ia.game import (
     analise_palavra_teste,
@@ -17,6 +16,9 @@ from wordle_ia.score import melhor_palavra
 
 app = Typer()
 console = Console()
+
+CONJUNTO_PALAVRAS_VALIDAS = criar_conjunto('palavras_validas.txt')
+CONJUNTO_PALAVRAS_POSSIVEIS = criar_conjunto('palavras_possiveis.txt')
 
 
 @app.command()
@@ -69,7 +71,7 @@ def ia():
             )
             tentativa, score = melhor_palavra(banco_de_palavras)
             if len(tentativa) == 0:
-                print("FUDEU")
+                print('FUDEU')
                 break
 
         lista_posicoes = analise_palavra_teste(tentativa, palavra_sortida)

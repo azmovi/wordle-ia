@@ -2,11 +2,12 @@ from rich import box
 from rich.console import Console
 from rich.table import Table
 
-from wordle_ia.banco_palavras_possiveis import CONJUNTO_PALAVRAS_POSSIVEIS
+from wordle_ia.banco_palavras import criar_conjunto
 
 console = Console()
 
 LISTA_DE_TENTATIVAS = []
+CONJUNTO_PALAVRAS_POSSIVEIS = criar_conjunto('palavras_possiveis.txt')
 
 
 def palavra_valida(palavra: str) -> bool:

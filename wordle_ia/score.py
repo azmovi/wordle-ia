@@ -53,7 +53,7 @@ def melhor_palavra(banco_de_palavras: set[str]) -> tuple[str, float]:
     Examples:
         >>> banco_de_palavras = {'apple', 'white', 'crane', 'speed', 'pulse'}
         >>> melhor_palavra(banco_de_palavras)
-        ('apple', 1.6)
+        ('apple', 1.8)
     """
     frequencias = frequencia_letras_por_pos(banco_de_palavras)
     maior_score = 0

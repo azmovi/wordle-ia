@@ -1,3 +1,6 @@
+from wordle_ia.banco_palavras import criar_conjunto
+
+
 def indices_tipo(lista_pos: list[int], tipo: int) -> list[int]:
     """
     Cria uma lista de inteiros que representa as posições que um determinado
@@ -65,6 +68,8 @@ def filtro_verde(
 
         if len(lista_indices) != 0:
             visitados = {palavra_teste[indice] for indice in lista_indices}
+    else:
+        novo_banco_de_palavras = banco_de_palavras
 
     return novo_banco_de_palavras, visitados
 
@@ -175,6 +180,8 @@ def filtro_amarelo(
                 for palavra in banco_de_palavras:
                     if letra in palavra:
                         novo_banco_de_palavras.add(palavra)
+    else:
+        novo_banco_de_palavras = banco_de_palavras
 
     return novo_banco_de_palavras, visitados
 
