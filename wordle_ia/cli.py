@@ -22,15 +22,26 @@ CONJUNTO_PALAVRAS_POSSIVEIS = criar_conjunto(
     'wordle_ia/palavras_possiveis.txt'
 )
 
+MSG1 = ':party_popper: [bold green] PARABENS! [/bold green] :party_popper:'
+MSG2 = ':tired_face: [bold red] VOCÊ PERDEU [/bold red] :tired_face:'
+MSG3 = '[bold]Aperte ENTER para testar a próxima palavra...[/bold]'
+
+PALAVRA_SORTIDA = choice(list(CONJUNTO_PALAVRAS_VALIDAS))
+
+
+def final(certo: bool, palavra_sortida: str) -> None:
+    if certo:
+        console.print(MSG1)
+    else:
+        console.print(MSG2)
+        console.print('[bold] A palavra correta é ', palavra_sortida)
+
 
 @app.command()
 def normal():
+    os.system('cls' if os.name == 'nt' else 'clear')
     init_table()
-    palavra_sortida = choice(list(CONJUNTO_PALAVRAS_VALIDAS))
     certo = False
-    # print(palavra_sortida)
-    msg1 = ':party_popper: [bold green] PARABENS! [/bold green] :party_popper:'
-    msg2 = ':tired_face: [bold red] VOCÊ PERDEU [/bold red] :tired_face:'
     qtd_tentativas = 0
     while not certo and qtd_tentativas < 6:
         tentativa = ''  # Gambiarra
@@ -39,32 +50,21 @@ def normal():
 
         qtd_tentativas += 1
         os.system('cls' if os.name == 'nt' else 'clear')
-        lista_posicoes = analise_palavra_teste(tentativa, palavra_sortida)
+        lista_posicoes = analise_palavra_teste(tentativa, PALAVRA_SORTIDA)
         imprime_tentativa(tentativa, lista_posicoes)
         certo = sum(lista_posicoes) == 10
 
-    if certo:
-        console.print(msg1)
-    else:
-        console.print(msg2)
-        console.print('[bold] A palavra correta é [/bold]', palavra_sortida)
+    final(certo, PALAVRA_SORTIDA)
 
 
 @app.command()
 def ia():
-    # Arrumar o filtro ou está excluindo de mais ou de menos
-    # Arrumar para a ia nem sempre escolher a melhor palavra
-
-    palavra_sortida = choice(list(CONJUNTO_PALAVRAS_VALIDAS))
-    palavra_inicial = 'salet'
+    os.system('cls' if os.name == 'nt' else 'clear')
+    tentativa = 'salet'
     certo = False
-    msg1 = ':party_popper: [bold green] PARABENS! [/bold green] :party_popper:'
-    msg2 = ':tired_face: [bold red] VOCÊ PERDEU [/bold red] :tired_face:'
-    msg3 = '[bold]Aperte ENTER para testar a próxima palavra...[/bold]'
     qtd_tentativas = 0
     banco_de_palavras = CONJUNTO_PALAVRAS_POSSIVEIS
     lista_posicoes = []
-    tentativa = palavra_inicial
     score = 3.5
     while not certo and qtd_tentativas < 6:
         if qtd_tentativas > 0:
@@ -72,22 +72,16 @@ def ia():
                 tentativa, lista_posicoes, banco_de_palavras
             )
             tentativa, score = melhor_palavra(banco_de_palavras)
-            if len(tentativa) == 0:
-                print('FUDEU')
-                break
-
-        lista_posicoes = analise_palavra_teste(tentativa, palavra_sortida)
+            score = round(score, 2)
+        lista_posicoes = analise_palavra_teste(tentativa, PALAVRA_SORTIDA)
         imprime_tentativa(tentativa, lista_posicoes)
         console.print(f'A palavra {tentativa}, teve um score de {score}')
-        console.print(msg3)
-        console.print(len(banco_de_palavras))
-        input()
-        os.system('cls' if os.name == 'nt' else 'clear')
-        qtd_tentativas += 1
         certo = sum(lista_posicoes) == 10
+        qtd_tentativas += 1
 
-    if certo:
-        console.print(msg1)
-    else:
-        console.print(msg2)
-        console.print('[bold] A palavra correta é [/bold]', palavra_sortida)
+        if not certo:
+            console.print(MSG3)
+            input()
+            if qtd_tentativas < 6:
+                os.system('cls' if os.name == 'nt' else 'clear')
+    final(certo, PALAVRA_SORTIDA)

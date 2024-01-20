@@ -116,7 +116,11 @@ def filtro_cinza(
     if len(lista_indices) != 0:
         for indice in lista_indices:
             letra = palavra_teste[indice]
-            if letra not in visitados:
+            if letra in visitados:
+                for palavra in banco_de_palavras:
+                    if palavra_teste[indice] == palavra[indice]:
+                        palavras_rejeitadas.add(palavra)
+            else:
                 visitados.add(letra)
                 for palavra in banco_de_palavras:
                     if letra in palavra:
@@ -168,19 +172,27 @@ def filtro_amarelo(
     tipo = 1
     novo_banco_de_palavras = set()
     lista_indices = indices_tipo(lista_pos, tipo)
+    rejeitados = set()
 
     if len(lista_indices) != 0:
         for indice in lista_indices:
             letra = palavra_teste[indice]
-            if letra not in visitados:
+            if letra in visitados:
+                for palavra in banco_de_palavras:
+                    if palavra_teste[indice] == palavra[indice]:
+                        rejeitados.add(palavra)
+            else:
                 visitados.add(letra)
                 for palavra in banco_de_palavras:
-                    if letra in palavra:
+                    if (
+                        letra in palavra
+                        and palavra_teste[indice] != palavra[indice]
+                    ):
                         novo_banco_de_palavras.add(palavra)
     else:
         novo_banco_de_palavras = banco_de_palavras
 
-    return novo_banco_de_palavras, visitados
+    return novo_banco_de_palavras - rejeitados, visitados
 
 
 def executa_filtros(

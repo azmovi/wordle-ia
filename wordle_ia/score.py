@@ -68,4 +68,4 @@ def melhor_palavra(banco_de_palavras: set[str]) -> tuple[str, float]:
             maior_score = score
             melhor_palavra = palavra
 
-    return melhor_palavra, round(maior_score, 2)
+    return melhor_palavra, maior_score
