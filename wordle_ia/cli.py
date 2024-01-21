@@ -30,6 +30,13 @@ PALAVRA_SORTIDA = choice(list(CONJUNTO_PALAVRAS_VALIDAS))
 
 
 def final(certo: bool, palavra_sortida: str) -> None:
+    """
+    Formatação basica para se utilizar no final da execução.
+    Paramenters:
+        certo: se o usuario acerto a palavra ou não.
+        palavra_sortida: a palavra que resolve o jogo.
+    Examples:
+    """
     if certo:
         console.print(MSG1)
     else:

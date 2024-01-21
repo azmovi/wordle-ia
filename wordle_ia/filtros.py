@@ -49,6 +49,9 @@ def filtro_verde(
         ... }
         >>> filtro_verde(palavra_teste, lista_pos, banco_de_palavras)
         ({...}, {'e'})
+        >>> lista_pos = [0, 0, 0, 0, 0]  # black
+        >>> filtro_verde(palavra_teste, lista_pos, banco_de_palavras)
+        ({...}, set())
 
     """
     visitados = set()
@@ -109,6 +112,14 @@ def filtro_cinza(
         ... palavra_teste, lista_pos, banco_de_palavras, visitados
         ... )
         {...}
+        >>> lista_pos = [2, 0, 2, 0, 0]  # steal
+        >>> banco_de_palavras = {'steal', 'smelt', 'sheml', 'speed'}
+        >>> visitados = {'s', 'e'}
+        >>> filtro_cinza(
+        ... palavra_teste, lista_pos, banco_de_palavras, visitados
+        ... )
+        {...}
+
     """
     tipo = 0
     palavras_rejeitadas = set()
@@ -163,6 +174,11 @@ def filtro_amarelo(
         ... 'crepe', 'creep', 'prece', 'soelp', 'steal', 'wheel'
         ... }
         >>> visitados = {'e'}
+        >>> filtro_amarelo(
+        ... palavra_teste, lista_pos, banco_de_palavras, visitados
+        ... )
+        ({...}, {...})
+        >>> lista_pos = [2, 0, 2, 0, 0]  # steal
         >>> filtro_amarelo(
         ... palavra_teste, lista_pos, banco_de_palavras, visitados
         ... )
