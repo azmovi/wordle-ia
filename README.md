@@ -64,11 +64,11 @@ $ task format
 #### Executar o jogo
 - Para conseguir jogar de forma normal deve rodar o seguinte comando:
 ```bash
-poetry run wordle normal
+wordle normal
 ```
 - Para fazer a ia jogar o wordle basta seguir o comando:
 ```bash
-poetry run wordle ia
+wordle ia
 ```
 - Recomendo que tenha uma fonte de emoji no bash para melhor experiencia do usuário
 #### Referencias
