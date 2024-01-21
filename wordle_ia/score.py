@@ -34,7 +34,7 @@ def frequencia_letras_por_pos(
             letra: qtd / total_por_pos
             for letra, qtd in dict_qtd_letras.items()
         }
-    return frequencia
+    return frequencia, contador
 
 
 def melhor_palavra(banco_de_palavras: set[str]) -> tuple[str, float]:
