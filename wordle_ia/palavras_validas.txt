@@ -18,6 +18,7 @@ quiet
 bench
 abate
 feign
+arise
 major
 death
 fresh
@@ -558,7 +559,6 @@ musty
 pique
 daddy
 quasi
-arise
 aging
 valet
 opium
@@ -2089,7 +2089,6 @@ ralph
 tango
 biddy
 smith
-mower
 payee
 serif
 drape
