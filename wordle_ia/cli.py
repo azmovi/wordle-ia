@@ -72,7 +72,7 @@ def ia():
     qtd_tentativas = 0
     banco_de_palavras = CONJUNTO_PALAVRAS_POSSIVEIS
     lista_posicoes = []
-    score = 3.5
+    score = 0.6
     while not certo and qtd_tentativas < 6:
         if qtd_tentativas > 0:
             banco_de_palavras = executa_filtros(
